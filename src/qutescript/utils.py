@@ -15,7 +15,15 @@ def write_log(message, file_path=None):
         logfile.writelines(record)
 
 
-def send_messages_to_browser(*messages):
+def cleanup_script_name(script_name):
+    if script_name:
+        script_name = script_name.replace('.', '_')
+        if not script_name.endswith('_'):
+            script_name = script_name + '_'
+    return script_name
+
+
+def send_messages_to_browser(*messages, script_name: str = None):
     """
     Write messages to a temporary file,
     Attempt to open the file through FIFO in the browser.
@@ -25,7 +33,9 @@ def send_messages_to_browser(*messages):
     if not fifo:
         return
     out_lines = ['<html><body><pre>'] + ['<p>{}</p>'.format(m or '&nbsp;') for m in messages]
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.html', delete=False) as trace_file:
+    script_name = cleanup_script_name(script_name)
+    prefix = 'qutescript_{}'.format((script_name or ''))
+    with tempfile.NamedTemporaryFile(mode='w', prefix=prefix, suffix='.html', delete=False) as trace_file:
         trace_file.writelines(out_lines)
         print('***', trace_file.name)
         with open(fifo, 'w') as fifo_file:
