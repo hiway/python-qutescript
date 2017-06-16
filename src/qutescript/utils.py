@@ -3,7 +3,19 @@
 import os
 import tempfile
 
-HTML_TEMPLATE = """\
+HTML_BODY = """\
+<html>
+<body>
+<pre>
+{}
+<pre>
+</body>
+"""
+
+HTML_MESSAGE_TEMPLATE = """\
+<pre>
+{}
+</pre>
 """
 
 log_file_path = './qutescript.log'
@@ -32,7 +44,9 @@ def log_to_browser(*messages, prefix: str = None, console=True):
     Attempt to open the file through FIFO in the browser.
     """
     [write_log(msg, console=console) for msg in messages]
-    send_to_browser('\n'.join(messages), prefix=prefix)
+    html_messages = '\n'.join([HTML_MESSAGE_TEMPLATE.format(m) for m in messages])
+    html_body = HTML_BODY.format(html_messages)
+    send_to_browser(html_body, prefix=prefix)
 
 
 def send_to_browser(text, prefix: str = None):
@@ -43,7 +57,7 @@ def send_to_browser(text, prefix: str = None):
     prefix = normalize_prefix(prefix)
     prefix = 'qutescript_{}'.format((prefix or ''))
     with tempfile.NamedTemporaryFile(mode='w', prefix=prefix, suffix='.html', delete=False) as out_file:
-        out_file.writelines(HTML_TEMPLATE.format(text))
+        out_file.writelines(text)
         with open(fifo, 'w') as fifo_file:
             fifo_file.write('open -t file://{}'.format(
                 os.path.abspath(out_file.name)))
