@@ -75,7 +75,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'qutescript = qutescript.cli:main',
+            # 'qutescript = qutescript.cli:main',
         ]
     },
 )
