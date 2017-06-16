@@ -15,14 +15,8 @@ Bind the command to a keystroke with:
     :bind KEYS spawn --userscript {name} OPTIONAL-ARGUMENTS
 
     examples:
-        - :bind kk spawn --userscript debug --kaboom
-            Use this by typing "kk" in normal mode, not fun :P
-            
-        - :bind ,dt spawn --userscript shell -c"date" --insert
-            Inserts current date in active tab.
-             
-Warning: Enclose your provided arguments and options in quotes and
-always test your command passed to `shell -c""` in the shell.
+        - :bind ,{nchar} spawn --userscript {name}
+        - :bind ,{nchar}x spawn --userscript {name} --extra-args
 """
 
 LOADER_TEMPLATE = """\
@@ -67,4 +61,9 @@ def install(path, name=None):
     interpreter = get_interpreter()
     setup_permissions(path)
     userscripts_path = link_to_qutebrowser_userscripts_directory(path, name)
-    return REVIEW_TEMPLATE.format(userscripts_path=userscripts_path, name=name, interpreter=interpreter)
+    return REVIEW_TEMPLATE.format(
+        userscripts_path=userscripts_path,
+        name=name,
+        interpreter=interpreter,
+        nchar=name[0],
+    )
