@@ -38,6 +38,8 @@ class Request(object):
             'title': self.title,
             'selected_text': self.selected_text,
             'selected_html': self.selected_html,
+            'script_path': self.script_path,
+            'script_name': self.script_name,
         }
 
     def send_command(self, command):
