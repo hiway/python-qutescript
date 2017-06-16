@@ -25,7 +25,6 @@ def shell_command(request):
     text = str(r, 'utf-8').strip()
     if args.insert:
         request.send_command('insert-text {}'.format(text))
-        # request.send_text(text)
     else:
         request.send_text(text)
 

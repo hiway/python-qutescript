@@ -37,12 +37,7 @@ def setup_permissions(path):
 
 
 def get_interpreter():
-    interpreter = sys.executable
-    if interpreter.startswith('/usr') or interpreter.startswith('/opt'):
-        interpreter = ''
-    else:
-        interpreter = interpreter + ' '
-    return interpreter
+    return sys.executable
 
 
 def link_to_qutebrowser_userscripts_directory(path, name):
