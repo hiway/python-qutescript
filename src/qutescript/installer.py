@@ -6,13 +6,23 @@ import stat
 
 REVIEW_TEMPLATE = """\
 Qutebrowser userscript {name!r} was installed at:
- 
     {userscripts_path!r}
 
-You can try it out by running the command:
-
+Try it out by running the command:
     :spawn --userscript {name}
 
+Bind the command to a keystroke with:
+    :bind KEYS spawn --userscript {name} OPTIONAL-ARGUMENTS
+
+    examples:
+        - :bind kk spawn --userscript debug --kaboom
+            Use this by typing "kk" in normal mode, not fun :P
+            
+        - :bind ,dt spawn --userscript shell -c"date" --insert
+            Inserts current date in active tab.
+             
+Warning: Enclose your provided arguments and options in quotes and
+always test your command passed to `shell -c""` in the shell.
 """
 
 LOADER_TEMPLATE = """\
