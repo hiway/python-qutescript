@@ -6,9 +6,7 @@ import tempfile
 HTML_BODY = """\
 <html>
 <body>
-<pre>
 {}
-<pre>
 </body>
 """
 
@@ -59,5 +57,5 @@ def send_to_browser(text, prefix: str = None):
     with tempfile.NamedTemporaryFile(mode='w', prefix=prefix, suffix='.html', delete=False) as out_file:
         out_file.writelines(text)
         with open(fifo, 'w') as fifo_file:
-            fifo_file.write('open -t file://{}'.format(
+            fifo_file.write('open -t file://{}\n'.format(
                 os.path.abspath(out_file.name)))
