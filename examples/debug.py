@@ -2,7 +2,7 @@
 # coding=utf-8
 import json
 
-from qutescript import qutescript
+from qutescript import userscript
 from qutescript.cli import parser
 
 
@@ -13,7 +13,7 @@ class KaboomError(Exception):
 parser.add_argument('--kaboom', action='store_true', help='Make things explode.')
 
 
-@qutescript
+@userscript
 def dump_to_log(request):
     args = parser.parse_args()
     if args.kaboom:

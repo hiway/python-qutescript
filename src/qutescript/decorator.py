@@ -10,7 +10,7 @@ from .cli import main_cli, userscript_cli
 from .request import build_request
 
 
-def qutescript(func):
+def userscript(func):
     def wrapper():
         userscript_name = os.path.basename(sys.argv[0])
         try:
