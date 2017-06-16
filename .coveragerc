@@ -1,0 +1,16 @@
+[paths]
+source =
+   src/qutescript
+   */site-packages/qutescript
+
+[run]
+branch = true
+source =
+    qutescript
+    tests
+parallel = true
+
+[report]
+show_missing = true
+precision = 2
+omit = *migrations*
