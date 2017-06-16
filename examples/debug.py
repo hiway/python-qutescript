@@ -3,10 +3,21 @@
 import json
 
 from qutescript import qutescript
+from qutescript.cli import parser
+
+
+class KaboomError(Exception):
+    pass
+
+
+parser.add_argument('--kaboom', action='store_true', help='Make things explode.')
 
 
 @qutescript
 def dump_to_log(request):
+    args = parser.parse_args()
+    if args.kaboom:
+        raise KaboomError('Oh noes!')
     with open('qutescript.debug.log', 'a') as logfile:
         line = json.dumps(request.dump())
         logfile.writelines([line])

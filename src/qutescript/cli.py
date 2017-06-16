@@ -15,36 +15,42 @@ Why does this file exist, and why not put this in __main__?
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
 import sys
+import argparse
 
-import click
 import os
-
 
 # ---
 
-# script_cli_parser = argparse.ArgumentParser(description='Qutebrowser userscript.')
-# script_cli_parser.add_argument('--install', action='store_true', help='Setup permissions and show install
-# instructions.')
+parser = argparse.ArgumentParser(description='Qutebrowser userscript.')
+parser.add_argument('--install', action='store_true',
+                    help='Setup permissions and show install instructions.')
+
 
 class NoSubCommands(Exception):
     pass
 
 
-@click.group(invoke_without_command=True)
-@click.pass_context
-def userscript(ctx):
+def main_cli():
     """
     Qutebrowser Userscript
     """
-    if ctx.invoked_subcommand is None:
-        raise NoSubCommands()
+    args = parser.parse_args()
+    if not args.install:
+        return
+    main_install()
 
 
-@userscript.command(name='install')
-def userscript_install():
+def main_install():
     from .installer import install
     userscript_path = os.path.abspath(sys.argv[0])
     path = os.path.abspath(userscript_path)
     name = os.path.basename(userscript_path)
-    click.echo_via_pager(install(path, name=name))
+    print(install(path, name=name))
     sys.exit(0)
+
+
+def userscript_cli(func):
+    def wrapper(request):
+        return func(request)
+
+    return wrapper
