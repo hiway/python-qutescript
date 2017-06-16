@@ -14,34 +14,37 @@ Why does this file exist, and why not put this in __main__?
 
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
-import argparse
-
-import os
 import sys
 
-parser = argparse.ArgumentParser(description='Command description.')
-parser.add_argument('names', metavar='NAME', nargs=argparse.ZERO_OR_MORE,
-                    help="A name of something.")
-
-
-def main(args=None):
-    args = parser.parse_args(args=args)
-    print(args.names)
+import click
+import os
 
 
 # ---
 
-script_cli_parser = argparse.ArgumentParser(description='Qutebrowser userscript.')
-script_cli_parser.add_argument('--install', action='store_true', help='Setup permissions and show install instructions.')
+# script_cli_parser = argparse.ArgumentParser(description='Qutebrowser userscript.')
+# script_cli_parser.add_argument('--install', action='store_true', help='Setup permissions and show install
+# instructions.')
+
+class NoSubCommands(Exception):
+    pass
 
 
-def script_cli(args=None):
-    args = script_cli_parser.parse_args(args=args)
-    if not args.install:
-        return
+@click.group(invoke_without_command=True)
+@click.pass_context
+def userscript(ctx):
+    """
+    Qutebrowser Userscript
+    """
+    if ctx.invoked_subcommand is None:
+        raise NoSubCommands()
+
+
+@userscript.command(name='install')
+def userscript_install():
     from .installer import install
     userscript_path = os.path.abspath(sys.argv[0])
     path = os.path.abspath(userscript_path)
     name = os.path.basename(userscript_path)
-    print(install(path, name=name))
+    click.echo_via_pager(install(path, name=name))
     sys.exit(0)
