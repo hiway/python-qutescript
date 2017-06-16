@@ -1,4 +1,5 @@
 # coding=utf-8
+from qutescript.utils import send_to_browser, log_to_browser
 
 
 class Request(object):
@@ -16,6 +17,8 @@ class Request(object):
         self.title = None
         self.selected_text = None
         self.selected_html = None
+        self.send_to_browser = send_to_browser
+        self.log_to_browser = log_to_browser
 
     def as_dict(self):
         return {
