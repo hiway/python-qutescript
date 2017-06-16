@@ -25,7 +25,7 @@ def cleanup_script_name(script_name):
 
 def send_messages_to_browser(*messages, script_name: str = None):
     """
-    Write messages to a temporary file,
+    Write messages to logs and a temporary file,
     Attempt to open the file through FIFO in the browser.
     """
     [write_log(msg) for msg in messages]

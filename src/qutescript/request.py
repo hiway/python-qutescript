@@ -17,7 +17,7 @@ class Request(object):
         self.selected_text = None
         self.selected_html = None
 
-    def dump(self):
+    def as_dict(self):
         return {
             'mode': self.mode,
             'user_agent': self.user_agent,
