@@ -1,5 +1,6 @@
 # coding=utf-8
-from qutescript.utils import send_to_browser, log_to_browser
+
+from qutescript.utils import log_to_browser, send_html
 
 
 class Request(object):
@@ -17,7 +18,7 @@ class Request(object):
         self.title = None
         self.selected_text = None
         self.selected_html = None
-        self.send_to_browser = send_to_browser
+        self.send_html = send_html
         self.log_to_browser = log_to_browser
 
     def as_dict(self):
@@ -36,6 +37,16 @@ class Request(object):
             'selected_text': self.selected_text,
             'selected_html': self.selected_html,
         }
+
+    def send_command(self, command):
+        if not self.fifo:
+            raise FileNotFoundError('QUTE_FIFO not defined in environment.')
+        with open(self.fifo, 'w') as out_file:
+            out_file.write('{}\n'.format(command))
+
+    def send_text(self, text, prefix=None, script_path=None):
+        html = '<pre>{}</pre>'.format(text)
+        self.send_html(html, prefix=prefix, script_path=script_path)
 
 
 def build_request():

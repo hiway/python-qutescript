@@ -6,7 +6,7 @@ from qutescript import userscript
 
 @userscript
 def hello_world(request):
-    request.send_to_browser('Hello, world!')
+    request.send_text('Hello, world!')
 
 
 if __name__ == '__main__':
