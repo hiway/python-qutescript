@@ -1,4 +1,6 @@
 # coding=utf-8
+import sys
+
 import os
 import stat
 
@@ -9,17 +11,13 @@ Qutebrowser userscript {name!r} was installed at:
 
 You can try it out by running the command:
 
-    :spawn --userscript {path}
+    :spawn --userscript {interpreter}{path}
 """
 
 
 def setup_permissions(path):
     file_stat = os.stat(path)
     os.chmod(path, file_stat.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
-
-
-def format_commands(path, name):
-    return TEMPLATE.format(path=path, name=name)
 
 
 def install(path, name=None):
@@ -29,5 +27,11 @@ def install(path, name=None):
     """
     path = os.path.abspath(os.path.expanduser(path))
     name = name or os.path.basename(path)
+    interpreter = sys.executable
+    if interpreter.startswith('/usr') or interpreter.startswith('/opt'):
+        interpreter = ''
+    else:
+        interpreter = interpreter + ' '
     setup_permissions(path)
-    return format_commands(path=path, name=name)
+
+    return TEMPLATE.format(path=path, name=name, interpreter=interpreter)
