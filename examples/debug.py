@@ -11,5 +11,6 @@ def dump_to_log(request):
         line = json.dumps(request.dump())
         logfile.writelines([line])
 
+
 if __name__ == '__main__':
     dump_to_log()

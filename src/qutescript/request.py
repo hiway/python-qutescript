@@ -51,4 +51,6 @@ def build_request():
     request.title = os.getenv('QUTE_TITLE')
     request.selected_text = os.getenv('QUTE_SELECTED_TEXT')
     request.selected_html = os.getenv('QUTE_SELECTED_HTML')
+    if not request.mode:
+        raise AssertionError('Unable to read environment variables, did you pass `:spawn --userscript` ?')
     return request

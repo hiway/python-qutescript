@@ -16,6 +16,8 @@ Why does this file exist, and why not put this in __main__?
 """
 import argparse
 
+import os
+import sys
 
 parser = argparse.ArgumentParser(description='Command description.')
 parser.add_argument('names', metavar='NAME', nargs=argparse.ZERO_OR_MORE,
@@ -25,3 +27,21 @@ parser.add_argument('names', metavar='NAME', nargs=argparse.ZERO_OR_MORE,
 def main(args=None):
     args = parser.parse_args(args=args)
     print(args.names)
+
+
+# ---
+
+script_cli_parser = argparse.ArgumentParser(description='Qutebrowser userscript.')
+script_cli_parser.add_argument('--install', action='store_true', help='Setup permissions and show install instructions.')
+
+
+def script_cli(args=None):
+    args = script_cli_parser.parse_args(args=args)
+    if not args.install:
+        return
+    from .installer import install
+    userscript_path = os.path.abspath(sys.argv[0])
+    path = os.path.abspath(userscript_path)
+    name = os.path.basename(userscript_path)
+    print(install(path, name=name))
+    sys.exit(0)
