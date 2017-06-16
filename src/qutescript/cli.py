@@ -43,9 +43,8 @@ def main_cli():
 def main_install():
     from .installer import install
     userscript_path = os.path.abspath(sys.argv[0])
-    path = os.path.abspath(userscript_path)
     name = os.path.basename(userscript_path)
-    print(install(path, name=name))
+    print(install(userscript_path, name=name))
     sys.exit(0)
 
 
