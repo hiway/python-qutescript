@@ -19,7 +19,7 @@ def dump_to_log(request):
     if args.kaboom:
         raise KaboomError('Oh noes!')
     with open('qutescript.debug.log', 'a') as logfile:
-        line = json.dumps(request.dump())
+        line = json.dumps(request.as_dict())
         logfile.writelines([line])
 
 

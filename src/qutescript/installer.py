@@ -4,14 +4,20 @@ import sys
 import os
 import stat
 
-TEMPLATE = """\
+REVIEW_TEMPLATE = """\
 Qutebrowser userscript {name!r} was installed at:
  
-    {path}
+    {userscripts_path!r}
 
 You can try it out by running the command:
 
-    :spawn --userscript {interpreter}{path}
+    :spawn --userscript {name}
+
+"""
+
+LOADER_TEMPLATE = """\
+#!/usr/bin/env bash
+{interpreter}"{path}" "$@"
 """
 
 
@@ -29,6 +35,23 @@ def get_interpreter():
     return interpreter
 
 
+def link_to_qutebrowser_userscripts_directory(path, name):
+    import appdirs
+    appdir = appdirs.user_data_dir('qutebrowser', 'qutebrowser')
+    userscripts_dir = os.path.join(appdir, 'userscripts')
+    userscripts_path = os.path.join(userscripts_dir, name)
+    interpreter = get_interpreter()
+    if not os.path.exists(userscripts_dir):
+        os.makedirs(userscripts_dir, exist_ok=False)
+    with open(userscripts_path, 'w') as bin_file:
+        bin_file.write(LOADER_TEMPLATE.format(
+            interpreter=interpreter,
+            path=path,
+        ))
+    setup_permissions(userscripts_path)
+    return userscripts_path
+
+
 def install(path, name=None):
     """
     Sets permissions for qutescript at path and returns
@@ -38,5 +61,5 @@ def install(path, name=None):
     name = name or os.path.basename(path)
     interpreter = get_interpreter()
     setup_permissions(path)
-
-    return TEMPLATE.format(path=path, name=name, interpreter=interpreter)
+    userscripts_path = link_to_qutebrowser_userscripts_directory(path, name)
+    return REVIEW_TEMPLATE.format(userscripts_path=userscripts_path, name=name, interpreter=interpreter)

@@ -24,6 +24,9 @@ import os
 parser = argparse.ArgumentParser(description='Qutebrowser userscript.')
 parser.add_argument('--install', action='store_true',
                     help='Setup permissions and show install instructions.')
+parser.add_argument('--bin', action='store',
+                    help='Used with --install, sets up the command in '
+                         '[AppDir]/qutebrowser/userscripts for easy access.')
 
 
 class NoSubCommands(Exception):
@@ -42,8 +45,9 @@ def main_cli():
 
 def main_install():
     from .installer import install
+    args = parser.parse_args()
     userscript_path = os.path.abspath(sys.argv[0])
-    name = os.path.basename(userscript_path)
+    name = args.bin or os.path.basename(userscript_path)
     print(install(userscript_path, name=name))
     sys.exit(0)
 
