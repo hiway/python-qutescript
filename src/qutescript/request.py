@@ -18,6 +18,8 @@ class Request(object):
         self.title = None
         self.selected_text = None
         self.selected_html = None
+        self.script_name = None
+        self.script_path = None
         self.send_html = send_html
         self.log_to_browser = log_to_browser
 
@@ -49,7 +51,7 @@ class Request(object):
         self.send_html(html, prefix=prefix, script_path=script_path)
 
 
-def build_request():
+def build_request(script_path):
     import os
     request = Request()
     request.mode = os.getenv('QUTE_MODE')
@@ -63,6 +65,8 @@ def build_request():
     request.commandline_text = os.getenv('QUTE_COMMANDLINE_TEXT')
     request.url = os.getenv('QUTE_URL')
     request.title = os.getenv('QUTE_TITLE')
+    request.script_name = os.path.basename(script_path)
+    request.script_path = os.path.basename(script_path)
     request.selected_text = os.getenv('QUTE_SELECTED_TEXT')
     request.selected_html = os.getenv('QUTE_SELECTED_HTML')
     if not request.mode:

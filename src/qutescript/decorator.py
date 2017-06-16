@@ -32,7 +32,7 @@ def userscript(func):
         # If sys.exit() was called by main_cli(), we would never reach here.
         # Since ^that^ did not happen...
         try:
-            request = build_request()
+            request = build_request(script_path=script_path)
         except Exception as e:
             log_to_browser(traceback.format_exc(),
                            'Cannot build request.',
