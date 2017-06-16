@@ -21,7 +21,7 @@ Bind the command to a keystroke with:
 
 LOADER_TEMPLATE = """\
 #!/usr/bin/env bash
-{interpreter}"{path}" "$@"
+{interpreter} "{path}" "$@"
 """
 
 
