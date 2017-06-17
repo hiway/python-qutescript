@@ -19,7 +19,7 @@ SENTENCES_COUNT = 10
 
 
 def generate_html(sentences, title_text):
-    doc = dominate.document(title='Summary')
+    doc = dominate.document(title='Summary: {}'.format(title_text))
 
     with doc.head:
         style("""\
