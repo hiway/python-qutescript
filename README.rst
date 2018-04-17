@@ -39,16 +39,16 @@ Example
 Tutorial
 ========
 
-At the time of writing this, I know of qutebrowser for only two days.
+At the time of writing this, I've known of qutebrowser for only two days.
 That is a testament to how addictive this new keyboard-access browser
-can be if you prefer that kind of a thing. If you haven't heard of it
+can be if you prefer that kind of thing. If you haven't heard of it
 yet, and you like vim and python - qutebrowser might be just for you.
 
 It is a lightweight browser built on top of PyQt5 toolkit, works
 with current Python (3.6.x) and has affinity for doing things the
-unix way - clean, simple, no bullshit.
+UNIX way - clean, simple, no bullshit.
 
-As with unix philosophy, it can pipe commands with webpage text,
+As with the UNIX philosophy, it can pipe commands with webpage text,
 current URL etc to your shell scripts or binaries, and can accept
 commands through a temporary FIFO/pipe back to the browser.
 
