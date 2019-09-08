@@ -39,17 +39,8 @@ Example
 Tutorial
 ========
 
-At the time of writing this, I know of qutebrowser for only two days.
-That is a testament to how addictive this new keyboard-access browser
-can be if you prefer that kind of a thing. If you haven't heard of it
-yet, and you like vim and python - qutebrowser might be just for you.
-
-It is a lightweight browser built on top of PyQt5 toolkit, works
-with current Python (3.6.x) and has affinity for doing things the
-unix way - clean, simple, no bullshit.
-
-As with unix philosophy, it can pipe commands with webpage text,
-current URL etc to your shell scripts or binaries, and can accept
+Qutebrowser can pipe commands with webpage text,
+current URL etc to shell scripts or binaries, and can accept
 commands through a temporary FIFO/pipe back to the browser.
 
 The qutebrowser documentation can get you started:
@@ -72,20 +63,25 @@ Alright, enough talk... let's set this up!
     https://github.com/qutebrowser/qutebrowser
 
 2. Clone qutescript:
-    `git clone https://github.com/hiway/python-qutescript.git qutescript`
+::
+    git clone https://github.com/hiway/python-qutescript.git qutescript
 
 3. Install qutescript:
-    `$ cd qutescript; pip install -e .`
+::
+    $ cd qutescript; pip install -e .
 
 4. Install an example or two:
-    `$ python examples/debug.py --install --bin=debug`
-    `$ python examples/shell.py --install --bin=shell`
+::
+    $ python examples/debug.py --install --bin=debug
+    $ python examples/shell.py --install --bin=shell
 
 5. Run qutebrowser and run:
-    `:spawn --userscript debug --kaboom`
+::
+    :spawn --userscript debug --kaboom
 
 6. Create a new file:
-    `vim my_hello.py`
+::
+    vim my_hello.py
 
 ::
 
@@ -104,10 +100,12 @@ Alright, enough talk... let's set this up!
         hello_world()
 
 7. Install your script:
-    `$ python examples/my_hello.py --install --bin=myhello`
+::
+    $ python examples/my_hello.py --install --bin=myhello
 
 8. Try it in qutebrowser:
-    `:spawn --userscript myhello`
+::
+    :spawn --userscript myhello
 
 9. Continue reading the reference section for details.
 
