@@ -28,7 +28,7 @@ def write_log(message, file_path=None, console=False):
         print('***', message)
     file_path = file_path or log_file_path
     file_path = os.path.abspath(os.path.expanduser(file_path))
-    with open(file_path, 'a') as logfile:
+    with open(file_path, 'a', encoding='utf-8') as logfile:
         logfile.write('*** {}\n\n'.format(message))
 
 
@@ -65,6 +65,6 @@ def send_html(text, prefix: str = None, script_path=None):
     script_path = script_path or ''
     with tempfile.NamedTemporaryFile(mode='w', prefix=prefix, suffix='.html', delete=False) as out_file:
         out_file.writelines(text)
-        with open(fifo, 'w') as fifo_file:
+        with open(fifo, 'w', encoding='utf-8') as fifo_file:
             fifo_file.write('open -t file://{}\n'.format(
                 os.path.abspath(out_file.name)))
